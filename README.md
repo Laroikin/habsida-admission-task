@@ -22,6 +22,13 @@ User inputs the whole mathematical expression in ONE line. Solutions that prompt
 11
 
 >Input: 
+5 + 8 - 2
+
+>Output: 
+11
+
+
+>Input: 
 5 - 8 * 2
 
 > Output: 
