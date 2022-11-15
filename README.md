@@ -1,18 +1,33 @@
-## Getting Started
+## Task: “Calculator 2.0”
+## Description
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Create a console application "Calculator". The application must read the arithmetic operations entered by the user from the console and output the result of their execution to the console.
 
-## Folder Structure
+User inputs the whole mathematical expression in ONE line. Solutions that prompt the user to enter digits and operations one by one are NOT eligible.
+## Requirements:
 
-The workspace contains two folders by default, where:
+1. The calculator can perform addition, subtraction, multiplication and division operations with THREE numbers: a + b - c, a - b + c, a * b - c, a / b * c.
+2. Two numbers can also be used as input.
+3. The calculator must accept input numbers from 1 to 10 inclusive, no more. At the output, the numbers are not limited in size.
+4. The calculator can only work with integers.
+5. When the user enters invalid numbers, the application throws an exception and exits.
+6. When the user enters a string that does not match one of the above arithmetic operations, the application throws an exception and exits.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Examples:
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+>Input: 
+5 - 2 + 8 
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+>Output: 
+11
 
-## Dependency Management
+>Input: 
+5 - 8 * 2
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+> Output: 
+-11
+## Evaluation Criteria
+
+Pay attention to the principles of OOP, try to break the program into logical classes. Solutions in which all the program code is in one class will be underestimated. Demonstrate your skill in working with different syntactic constructions, do not forget about exceptional situations in which the program cannot be executed due to incorrect input data.
+
+
