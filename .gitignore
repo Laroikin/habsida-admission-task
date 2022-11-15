@@ -1,2 +1,5 @@
 .git
 .vscode
+
+src/*.class
+src/tempCodeRunnerFile.java
