@@ -1,149 +1,122 @@
-public class Calculator {
-  enum AllowedOperators {
-    ADD, SUBTRACT, MULTIPLY, DIVIDE
-  }
+enum AllowedOperators {
+  ADD, SUBTRACT, MULTIPLY, DIVIDE
+}
 
+class Input {
+  
   int a, b, c;
   AllowedOperators op1, op2;
 
-  Calculator(String inputStr) {
-      input(inputStr);
-      calculate();
+  Input(String inputStr) {
+    getInput(inputStr);
   }
 
-  public void input(String input) {
-      String[] inputArray = input.split(" ");
+  private void getInput(String input) {
+    String[] inputArray = input.split(" ");
 
-      if (inputArray.length != 5) {
-          throw new Error("Invalid input");
-      }
+    if (inputArray.length != 5) {
+      throw new Error("Invalid input");
+    }
 
-      handleIntegers(inputArray[0], inputArray[2], inputArray[4]);
+    handleIntegers(inputArray[0], inputArray[2], inputArray[4]);
 
-      op1 = assignOperator(inputArray[1]);
-      op2 = assignOperator(inputArray[3]);
+    op1 = assignOperator(inputArray[1]);
+    op2 = assignOperator(inputArray[3]);
   }
 
   private AllowedOperators assignOperator(String c) {
-      try {
-          switch (c) {
-              case "+":
-                  return AllowedOperators.ADD;
-              case "-":
-                  return AllowedOperators.SUBTRACT;
-              case "*":
-                  return AllowedOperators.MULTIPLY;
-              case "/":
-                  return AllowedOperators.DIVIDE;
-              default:
-                  throw new Exception("Invalid Operator. Must be +, -, / or *.");
-          }
-      } catch (Exception e) {
-          throw new Error(e.getMessage());
+    try {
+      switch (c) {
+        case "+":
+          return AllowedOperators.ADD;
+        case "-":
+          return AllowedOperators.SUBTRACT;
+        case "*":
+          return AllowedOperators.MULTIPLY;
+        case "/":
+          return AllowedOperators.DIVIDE;
+        default:
+          throw new Exception("Invalid Operator. Must be +, -, / or *.");
       }
+    } catch (Exception e) {
+      throw new Error(e.getMessage());
+    }
   }
 
   private void handleIntegers(String s1, String s2, String s3) {
+    try {
+
       try {
-
-          try {
-              a = Integer.parseInt(s1);
-              b = Integer.parseInt(s2);
-              c = Integer.parseInt(s3);
-          } catch (NumberFormatException e) {
-              throw new Exception("Invalid input: Numbers must be integers");
-          }
-
-          if (a > 10 || b > 10 || c > 10) {
-              throw new Exception("Number is greater than 10");
-          }
-
-          if (a < 1 || b < 1 || c < 1) {
-              throw new Exception("Number is less than 1");
-          }
-      } catch (Exception e) {
-          throw new Error(e.getMessage());
+        a = Integer.parseInt(s1);
+        b = Integer.parseInt(s2);
+        c = Integer.parseInt(s3);
+      } catch (NumberFormatException e) {
+        throw new Exception("Invalid input: Numbers must be integers");
       }
+
+      if (a > 10 || b > 10 || c > 10) {
+        throw new Exception("Number is greater than 10");
+      }
+
+      if (a < 1 || b < 1 || c < 1) {
+        throw new Exception("Number is less than 1");
+      }
+    } catch (Exception e) {
+      throw new Error(e.getMessage());
+    }
+  }
+}
+
+public class Calculator extends Input {
+
+  Calculator(String input) {
+    super(input);
   }
 
-  public void calculate() {
-      double result = 0;
-      if ((op2 == AllowedOperators.MULTIPLY || op2 == AllowedOperators.DIVIDE)
-              && (op1 == AllowedOperators.ADD || op1 == AllowedOperators.SUBTRACT)) {
-          double temp = 0;
+  public double calculate() {
+    double result = 0;
+    if (checkOrder()) {
+      double temp = 0;
 
-          if (op2 == AllowedOperators.MULTIPLY) {
-              temp = b * c;
-          } else {
-              try {
-                  temp = Double.valueOf(b) / Double.valueOf(c);
-              } catch (ArithmeticException e) {
-                  throw new Error("Cannot divide by 0");
-              }
-          }
+      temp = getResult(op2, b, c);
+      result = getResult(op1, a, temp);
 
-          switch (op1) {
-              case ADD:
-                  result = a + temp;
-                  break;
-              case SUBTRACT:
-                  result = a - temp;
-                  break;
-              case MULTIPLY:
-                  result = a * temp;
-                  break;
-              case DIVIDE:
-                  try {
-                      result = Double.valueOf(a) / temp;
-                  } catch (ArithmeticException e) {
-                      throw new Error("Cannot divide by 0");
-                  }
-                  break;
-          }
+      System.out.println(result);
 
-          System.out.println(result);
+      return result;
+    }
 
-          return;
-      }
+    result = getResult(op1, a, b);
+    result = getResult(op2, result, c);
 
-      switch (op1) {
-          case ADD:
-              result = a + b;
-              break;
-          case SUBTRACT:
-              result = a - b;
-              break;
-          case MULTIPLY:
-              result = a * b;
-              break;
-          case DIVIDE:
-              try {
-                  result = Double.valueOf(a) / Double.valueOf(b);
-              } catch (ArithmeticException e) {
-                  throw new Error("Cannot divide by 0");
-              }
-              break;
-      }
+    System.out.println("Output: " + result);
+    return result;
+  }
 
-      switch (op2) {
-          case ADD:
-              result += c;
-              break;
-          case SUBTRACT:
-              result -= c;
-              break;
-          case MULTIPLY:
-              result *= c;
-              break;
-          case DIVIDE:
-              try {
-                  result /= Double.valueOf(c);
-              } catch (ArithmeticException e) {
-                  throw new Error("Cannot divide by 0");
-              }
-              break;
-      }
+  private boolean checkOrder() {
+    if ((op2 == AllowedOperators.MULTIPLY || op2 == AllowedOperators.DIVIDE)
+        && (op1 == AllowedOperators.ADD || op1 == AllowedOperators.SUBTRACT)) {
+      return true;
+    }
+    return false;
+  }
 
-      System.out.println("Output: " + result);
+  private double getResult(AllowedOperators op, double a, double b) {
+    switch (op) {
+      case ADD:
+        return a + b;
+      case SUBTRACT:
+        return a - b;
+      case MULTIPLY:
+        return a * b;
+      case DIVIDE:
+        try {
+          return a / b;
+        } catch (ArithmeticException e) {
+          throw new Error("Cannot divide by 0");
+        }
+      default:
+        throw new Error("Invalid operator");
+    }
   }
 }
