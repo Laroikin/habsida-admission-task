@@ -20,7 +20,8 @@ public class RandomTests {
     for (int i = 0; i < 100; i++) {
       String s = generateRandomCorrectString();
       System.out.println("Test " + (i + 1) + ": " + s);
-      new Calculator(s);
+      Calculator obj = new Calculator(s);
+      obj.calculate();
       System.out.println("\n--------------------------------\n");
     }
   }
