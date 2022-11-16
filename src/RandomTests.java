@@ -17,7 +17,7 @@ public class RandomTests {
     map.put(2, "*");
     map.put(3, "/");
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10; i++) {
       String s = generateRandomCorrectString();
       System.out.println("Test " + (i + 1) + ": " + s);
       Calculator obj = new Calculator(s);
